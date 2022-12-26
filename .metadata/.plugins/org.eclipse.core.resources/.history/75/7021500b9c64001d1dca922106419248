@@ -1,0 +1,94 @@
+package Getting_Started;
+
+import org.testng.annotations.Test;
+
+import io.restassured.response.Response;
+
+import static io.restassured.RestAssured.*;
+import static org.hamcrest.Matchers.*;
+
+
+public class FinalCode {
+	
+	
+  @Test 
+  public void Get_Methods() {
+	  
+	  given()
+	  		.baseUri("https://restcountries.com/v2").
+	  when()
+	  		.get("/all").
+	  then()
+	  		.statusCode(200);
+	  
+  }
+  
+  	@Test
+  public void validate_Json_response() {
+	  
+	  given()
+	  	.baseUri("https://restcountries.com/v2").
+	  when()
+	  	.get("/alpha/USA"). 
+	  then()
+	  	.statusCode(200).
+	  body(
+		
+		"name", equalTo("United States of America"),
+		"altSpellings", hasItem("US"),
+		"currencies[0].symbol", equalTo("$"),
+		"languages[0].name", equalTo("English")
+		);
+  }
+  	
+  	@Test
+  	public void Validate_XML_Response() {
+  		
+  		given()
+  			.baseUri("https://api.openweathermap.org/data/2.5")
+  			.queryParam("q", "London,uk")
+  			.queryParam("appid", "c1d40bc15ebfbf83b49c8c1f9214ff4f")
+  			.queryParam("mode", "xml").
+  		when()
+  			.get("/weather").
+  		then().
+  			statusCode(200).
+  			body(
+  				"current.city.@name", equalTo("London"),
+  				"current.city.coord.@lat", equalTo("51.5085"),
+  				"current.city.country", equalTo("GB")
+  				);
+  	}
+  	
+  	
+  	@Test
+  	public void Extract_Response() {
+  		
+  		Response res = given()
+  			.baseUri("https://restcountries.com/v2").
+  		when().
+  			get("/alpha/USA").
+  		then().
+  			extract().response();
+  		System.out.println(res.asString());
+  				
+  	}
+  	
+  	@Test
+  	public void Extract_Single_Value_Response_XML() {
+  		
+  		String cityname = given()
+  			.baseUri("https://api.openweathermap.org/data/2.5")
+  			.queryParam("q", "London,uk")
+  			.queryParam("appid", "c1d40bc15ebfbf83b49c8c1f9214ff4f")
+  			.queryParam("mode", "xml").
+  		when().
+  			get("/weather").
+  		then()
+  			.statusCode(200)
+  			.extract().path("current.city.@name");
+  		System.out.println("City Name=" +cityname);
+  		
+  		
+  	}
+}

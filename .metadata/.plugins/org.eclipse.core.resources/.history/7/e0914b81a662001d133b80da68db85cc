@@ -1,0 +1,40 @@
+package Getting_Started;
+
+import org.testng.annotations.Test;
+import static io.restassured.RestAssured.*;
+import static org.hamcrest.Matchers.*;
+
+public class StatusCodeVerification {
+  @Test
+  public void Get_Methods() {
+	  
+	  given()
+	  		.baseUri("https://restcountries.com/v2").
+	  when()
+	  		.get("/all").
+	  then()
+	  		.statusCode(200);
+	  
+  }
+  
+  public void validate_response() {
+	  
+	  given()
+	  	.baseUri("https://restcountries.com/v2").
+	  when()
+	  	.get("/alpha/USA"). 
+	  then()
+	  	.statusCode(200).
+	  body(
+		
+		"name", equalTo("United States of America"),
+		"altSpellings", hasItem("US"),
+		"currencies[0].symbol", equalTo("$"),
+		"languages[0].name", equalTo("English")
+		);
+	  	
+	  
+	 
+	  	
+  }
+}

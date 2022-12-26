@@ -1,0 +1,36 @@
+package post_put_delete;
+
+import org.testng.annotations.Test;
+
+import io.restassured.http.ContentType;
+
+import static io.restassured.RestAssured.*;
+import static org.hamcrest.Matchers.*;
+
+import java.io.File;
+
+public class POST_Final_Code {
+  
+	@Test
+  public void Validate_Create_Users() {
+		
+		File file = new File("postresources/createusers.json");
+		
+		String job = given()
+			.baseUri("https://reqres.in/api")
+			.contentType(ContentType.JSON)
+			.body(file).
+			
+		when()
+			.post("/users").
+		then()
+			.statusCode(201)
+			.body("name",equalTo("sagar"))
+			.extract().path("job");
+		
+		System.out.println("Job Is:" +job);
+			
+		
+		
+  }
+}

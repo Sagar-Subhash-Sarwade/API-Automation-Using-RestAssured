@@ -1,0 +1,13 @@
+package getting_started;
+
+import org.testng.annotations.Test;
+import io.restassured.RestAssured.*;
+
+public class getting_started {
+	
+	@Test
+	public void simple_get_request() {
+		
+	}
+  
+}

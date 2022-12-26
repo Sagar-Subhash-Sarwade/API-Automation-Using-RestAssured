@@ -1,0 +1,51 @@
+package Getting_Started;
+
+import org.hamcrest.Matcher;
+import org.testng.annotations.Test;
+import static io.restassured.RestAssured.*;
+
+
+public class DailyPractice {
+	
+	
+  @Test
+  public void Validate_Status_Get_Request() {
+	  
+	  given()
+	  	.baseUri("https://restcountries.com/v2").
+	  when()
+	  	.get("/all").
+	  then()
+	  	.statusCode(200);
+  }
+  
+  
+  @Test
+  public void Validate_Json_Response() {
+	  
+	  given()
+	  	.baseUri("https://restcountries.com/v2").
+	  when()
+	  	.get("/alpha/USA").
+	  then()
+	  	.statusCode(200).
+	  	body(
+	  		"name", equalTo("United States of America"),
+	  		"altSpellings", hasItem("US"),
+	  		
+	  		);
+  }
+
+
+private Object hasItem(String string) {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+
+private Matcher<?> equalTo(String string) {
+	// TODO Auto-generated method stub
+	return null;
+}
+  
+}

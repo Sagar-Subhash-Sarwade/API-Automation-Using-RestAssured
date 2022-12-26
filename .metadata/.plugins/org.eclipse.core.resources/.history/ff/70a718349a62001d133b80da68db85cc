@@ -1,0 +1,9 @@
+package Getting_Started;
+
+import org.testng.annotations.Test;
+
+public class StatusCodeVerification {
+  @Test
+  public void f() {
+  }
+}

@@ -1,0 +1,22 @@
+package post_put_delete;
+
+import org.testng.annotations.Test;
+import io.restassured.http.ContentType;
+import static io.restassured.RestAssured.*;
+import static org.hamcrest.Matchers.*;
+import java.io.File;
+
+public class POST_Final_Code {
+  
+	@Test
+  public void Validate_Create_Users() {
+
+		given()
+			.baseUri("https://dummy.restapiexample.com/api/v1").
+		when()
+			.post("/create").
+		then()
+			.statusCode(200);
+				
+  }
+}

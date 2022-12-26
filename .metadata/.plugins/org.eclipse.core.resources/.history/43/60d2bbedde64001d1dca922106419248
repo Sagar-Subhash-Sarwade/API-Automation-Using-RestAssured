@@ -1,0 +1,23 @@
+package post_put_delete;
+
+import org.testng.annotations.Test;
+import static io.restassured.RestAssured.*;
+import static org.hamcrest.Matchers.*;
+
+public class POST_Final_Code {
+  
+	@Test
+  public void Validate_Create_Users() {
+		
+		given()
+			.baseUri("").
+		when()
+			.post("").
+		then()
+			.statusCode(201)
+			
+			
+		
+		
+  }
+}

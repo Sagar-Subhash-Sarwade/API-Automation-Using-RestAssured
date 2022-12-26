@@ -1,0 +1,29 @@
+package Getting_Started;
+
+import org.testng.annotations.Test;
+import static io.restassured.RestAssured.*;
+import static org.hamcrest.Matchers.*;
+
+public class Get_Method {
+
+	@Test
+  public void Validate_Satus_Code() {
+	  
+	  given().baseUri("https://restcountries.com/v2").when().get("/all").then().statusCode(200);
+	  
+	}
+	
+	@Test
+	public void Validate_Json_Body_Response () {
+		
+		given()
+			.baseUri("https://restcountries.com/v2").
+		when()
+			.get("/alpha/USA").
+		then()
+			.statusCode(200)
+			.body("name",eq	
+				);
+	}
+	
+}

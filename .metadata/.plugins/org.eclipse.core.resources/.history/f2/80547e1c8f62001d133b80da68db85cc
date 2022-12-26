@@ -1,0 +1,16 @@
+package Getting_Started;
+
+import org.testng.annotations.Test;
+import static io.restassured.RestAssured.*;
+
+public class Get_Method {
+
+	@Test
+  public void simple_get_method() {
+	  
+		System.out.print("Status Received Is As Expected : ");
+	  given().baseUri("https://restcountries.com/v2").when().get("/all").then().statusCode(200);
+	  
+	  
+  }
+}

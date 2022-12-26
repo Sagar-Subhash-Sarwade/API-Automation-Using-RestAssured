@@ -1,0 +1,86 @@
+package Getting_Started;
+
+import org.testng.annotations.Test;
+
+import io.restassured.response.Response.*;
+
+import static io.restassured.RestAssured.*;
+import static org.hamcrest.Matchers.*;
+import org.junit.Ignore;
+
+public class Get_Method {
+
+	@Test @Ignore
+  public void Validate_Satus_Code() {
+	  
+	  given().baseUri("https://restcountries.com/v2").when().get("/all").then().statusCode(200);
+	  
+	}
+	
+	@Test @Ignore
+	public void Validate_Json_Body_Response () {
+		
+		given()
+			.baseUri("https://restcountries.com/v2").
+		when()
+			.get("/alpha/USA").
+		then()
+			.statusCode(200)
+			.body(
+					"name", equalTo("United States of America"),
+					"alpha2Code", equalTo("US"),
+					"altSpellings", hasItem("USA"),
+					"currencies[0].symbol", equalTo("$"),
+					"languages[0].name", equalTo("English")
+					);
+	}
+	
+	@Test @Ignore
+	public void Validate_XML_Body_Response () {
+		
+		given()
+			.baseUri("https://api.openweathermap.org/data/2.5")
+			.queryParam("q", "London,uk")
+			.queryParam("APPID", "c1d40bc15ebfbf83b49c8c1f9214ff4f")
+			.queryParam("mode", "xml").
+		when()
+			.get("/weather").
+		then()
+			.statusCode(200).
+			body(
+				"current.city.@name", equalTo("London"),
+				"current.city.country", equalTo("GB"),
+				"current.temperature.@unit", equalTo("kelvin")
+				
+				);
+		
+		
+	}
+	
+	@Test @Ignore
+	public void Response_Extract() {
+		
+		Response res = given().
+			baseUri("https://restcountries.com/v2").
+		when().
+			get("/alpha/USA").
+		then().
+			extract().response();
+		System.out.println(res.asString());
+	}
+	
+	@Test
+	public void Extract_Single_Response_Value() {
+	Response temp = given().
+			baseUri("https://api.openweathermap.org/data/2.5")
+			.queryParam("q", "London,uk")
+			.queryParam("APPID", "c1d40bc15ebfbf83b49c8c1f9214ff4f")
+			.queryParam("mode", "xml").
+	when().
+		get("/weather").
+	then().
+		extract().path("current.temperature.@value");	
+		System.out.println(temp);
+		
+	}
+}

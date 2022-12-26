@@ -1,0 +1,54 @@
+package Getting_Started;
+
+import org.testng.annotations.Test;
+import static io.restassured.RestAssured.*;
+import static org.hamcrest.Matchers.*;
+import org.junit.Ignore;
+
+public class Get_Method {
+
+	@Test @Ignore
+  public void Validate_Satus_Code() {
+	  
+	  given().baseUri("https://restcountries.com/v2").when().get("/all").then().statusCode(200);
+	  
+	}
+	
+	@Test @Ignore
+	public void Validate_Json_Body_Response () {
+		
+		given()
+			.baseUri("https://restcountries.com/v2").
+		when()
+			.get("/alpha/USA").
+		then()
+			.statusCode(200)
+			.body(
+					"name", equalTo("United States of America"),
+					"alpha2Code", equalTo("US"),
+					"altSpellings", hasItem("USA"),
+					"currencies[0].symbol", equalTo("$"),
+					"languages[0].name", equalTo("English")
+					);
+	}
+	
+	@Test
+	public void Validate_XML_Body_Response () {
+		
+		given()
+			.baseUri("http://restapi.adequateshop.com/api").
+		when()
+			.get("/Traveler").
+		then()
+			.statusCode(200).
+			body(
+				"travelers.id", equalTo("11133"),
+				"travelers.name", equalTo("Developer"),
+				"travelers.adderes", equalTo("USA")
+				
+				);
+		
+		
+	}
+	
+}

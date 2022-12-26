@@ -1,0 +1,15 @@
+package Getting_Started;
+
+import org.testng.annotations.Test;
+import io.restassured.RestAssured.*;
+import org.hamcrest.Matchers.*;
+
+public class DailyPractice {
+	
+	
+  @Test
+  public void Validate_Status_Get_Request() {
+	  
+	  given().ba
+  }
+}

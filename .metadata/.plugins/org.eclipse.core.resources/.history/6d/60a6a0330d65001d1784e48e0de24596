@@ -1,0 +1,56 @@
+package post_put_delete;
+
+import org.json.JSONObject;
+import org.junit.Ignore;
+import org.testng.annotations.Test;
+import io.restassured.http.ContentType;
+import static io.restassured.RestAssured.*;
+import static org.hamcrest.Matchers.*;
+import java.io.File;
+
+public class POST_Final_Code {
+
+	@Test @Ignore
+	public void Validate_Create_Users() {
+
+		File file = new File("postresources/dummyapi.json");
+
+		int id = given()
+					.baseUri("https://dummy.restapiexample.com/api/v1")
+					.contentType(ContentType.JSON)
+					.body(file).
+				when()
+					.post("/create").
+				then()
+					.statusCode(200)
+					.body("data.name", equalTo("test"))
+					.extract().path("data.id");
+
+		System.out.println("ID is:" + id);
+	}
+	
+	@Test
+	public void Validate_User_Using_Json_Object() {
+		
+		JSONObject body = new JSONObject();
+		body.put("name","test");
+		body.put("salary","123456");
+		body.put("age","45");
+		body.put("id", "10");
+		
+		
+		int id = given()
+			.baseUri("https://dummy.restapiexample.com/api/v1")
+			.contentType(ContentType.JSON)
+			.body(body).
+		when()
+			.post("/create").
+		then()
+			.statusCode(200)
+			.body("data.name", equalTo("test"))
+			.extract().path("data.id");
+			
+		System.out.println("ID of test Is:" +id);
+			
+	}
+}
